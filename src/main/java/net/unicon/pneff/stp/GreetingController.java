@@ -16,8 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 public class GreetingController {
 
     @PostMapping("/greeting")
-    public String greeting(HttpServletRequest request, @RequestParam(name="name", required=false, defaultValue="World") String name,
-                           @RequestParam(name="oauth_consumer_key", required=true) String consumerKey, Model model) {
+    public String greeting(HttpServletRequest request,
+                           @RequestParam(name="name", required=false, defaultValue="World") String name,
+                           @RequestParam(name="oauth_consumer_key", required=true) String consumerKey,
+                           @RequestParam(name="launch_presentation_return_url", required = false) String returnUrl,
+                           Model model) {
         dumpRequest(request);
         System.out.println("Consumer key = " + consumerKey);
         String secret = "secret";
@@ -38,6 +41,7 @@ public class GreetingController {
 
         model.addAttribute("verified", verified);
         model.addAttribute("name", name);
+        model.addAttribute("returnUrl", returnUrl);
         return "greeting";
     }
     private void dumpRequest(HttpServletRequest request) {
